@@ -4,6 +4,7 @@ const validateBody = require("../../middlewares/validateBody");
 const {
   regUserSchema,
   updateSubscriptionSchema,
+  emailSchema,
 } = require("../../models/user");
 const authenticate = require("../../middlewares/authenticate");
 const upload = require("../../middlewares/upload");
@@ -11,6 +12,10 @@ const upload = require("../../middlewares/upload");
 const router = express.Router();
 
 router.post("/register", validateBody(regUserSchema), ctrl.register);
+
+router.get("/verify/:verificationToken", ctrl.verifyEmail);
+
+router.post("/verify", validateBody(emailSchema), ctrl.resendVerifyEmail);
 
 router.post("/login", validateBody(regUserSchema), ctrl.login);
 
